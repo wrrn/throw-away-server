@@ -5,20 +5,27 @@ import(
 	"github.com/martini-contrib/render"
 )
 
+const (
+	staticFiles = "/home/frick/views"
+	layoutDir = "/home/frick/views"
+	layoutFile = "html/layouts/default"
+	homeFile = "html/pages/home"
+
+)
 
 func main() {
 	m := martini.Classic()
 	renderOptions := render.Options{
-		Directory: "/Users/warren/workbench/views",
-		Layout: "html/layouts/default",
+		Directory: staticFiles,
+		Layout: layoutFile,
 		Extensions: []string{".html",},
 		Charset: "UTF-8",
 	}
 
 	m.Use(render.Renderer(renderOptions))
-	m.Use(martini.Static("/Users/warren/workbench/views"))
+	m.Use(martini.Static(staticFiles))
 	m.Get("/", func(r render.Render) {
-		r.HTML(200, "html/pages/home", "")
+		r.HTML(200, homeFile, "")
 	})
 
 
